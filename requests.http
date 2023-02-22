@@ -1,10 +1,12 @@
+@jwt = eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2NzcxMjA2OTN9.d09TXJyGvhKAZ_DAVSqrOIvLy2ejnoJP65SxXzINEFg
+
 ### Users create (signup)
 POST http://localhost:3000/users.json
 Content-Type: application/json
 
 {
-  "name": "Test name",
-  "email": "test@test.com",
+  "name": "mia",
+  "email": "mia@test.com",
   "password": "password",
   "password_confirmation": "password"
 }
@@ -15,6 +17,18 @@ POST http://localhost:3000/sessions.json
 Content-Type: application/json
 
 {
-  "email": "test@test.com",
+  "email": "mia@test.com",
   "password": "password"
+}
+
+### Posts
+POST http://localhost:3000/posts.json
+Content-Type: application/json
+Authorization: Bearer {{jwt}}
+
+{
+  "user_id": 1,
+  "title": "test 3",
+  "body": "another 1",
+  "image": "https://www.testim.io/wp-content/uploads/2019/11/Testim-What-is-a-Test-Environment_-A-Guide-to-Managing-Your-Testing-A.png"
 }
