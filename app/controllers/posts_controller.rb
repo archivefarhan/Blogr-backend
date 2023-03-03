@@ -2,8 +2,8 @@ class PostsController < ApplicationController
   before_action :authenticate_user, except: [:index, :show]
 
   def index
-    posts = Post.all.order(:id)
-    render json: posts
+    posts = Post.all(:id)
+    render json: posts.as_json
   end
 
   def create
@@ -14,32 +14,41 @@ class PostsController < ApplicationController
       image: params[:image],
     )
     if post.save
-      render json: post
+      render json: post.as_json
     else
       render json: { errors: post.errors.full_messages }, status: :bad_request
     end
   end
 
   def show
-    post = Post.find_by(id: params[:id])
-    render json: post
+    id = params[:id]
+    post = Post.find(id)
+    render json: post.as_json
   end
 
   def update
-    post = Post.find_by(id: params[:id])
+    id = params[:id]
+    post = Post.find(id)
+    
+    post.update(
     post.title = params[:title] || post.title
     post.body = params[:body] || post.body
     post.image = params[:image] || post.image
+    )
+
     if post.save
-      render json: post
+      render json: post.as_json
     else
       render json: { errors: post.errors.full_messages }, status: :bad_request
     end
   end
 
   def destroy
-    post = Post.find_by(id: params[:id])
+    id = params[:id]
+    post = Post.find(id)
+
     post.destroy
+    
     render json: { message: "Post successfully destroyed!" }
   end
 end
