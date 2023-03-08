@@ -30,11 +30,9 @@ class PostsController < ApplicationController
     id = params[:id]
     post = Post.find(id)
 
-    post.update(
-      post.title = params[:title] || post.title,
-      post.body = params[:body] || post.body,
-      post.image = params[:image] || post.image
-    )
+    post.title = params[:title] || post.title
+    post.body = params[:body] || post.body
+    post.image = params[:image] || post.image
 
     if post.save
       render json: post.as_json
